@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>문자열형.html</h1>
+</body>
+
+</html>
+<script>
+    let str1 = "알파코"
+    let str2 = '단일따옴표';
+    let str3 = `백틱 ${str1} ${str2}`;
+
+    console.log(str1);          // 알파코
+    console.log(str2);          // 단일따옴표
+    console.log(str3);          // 백틱 알파코 단일따옴표
+
+    let name = "홍길동";
+    let age = 34;
+    let phone = "서울시 관악구 대학동";
+
+    result1 = "이름: " + name + " 나이: " + age + " 전화: " + phone;
+    result2 = `이름: ${name} 나이: ${age} 전화: ${phone}`;
+
+    console.log(result1);       // 이름: 홍길동 나이: 34 전화: 서울시 관악구 대학동
+    console.log(result2);       // 이름: 홍길동 나이: 34 전화: 서울시 관악구 대학동
+
+
+    // backtick 은 공백도 인식한다(왼쪽에 탭한거 인식함)
+    // 여러줄에 걸쳐 출력할 때 유용하다
+    str4 = `
+        ddd
+            dddd
+        dddddddd
+        ddddddd
+    `;
+    console.log(str4);
+
+</script>
