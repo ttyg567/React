@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> 화살표함수 5</h1>
+</body>
+
+</html>
+<script>
+    let rect = [
+        { w: 5, h: 4 },
+        { w: 15, h: 14 },
+        { w: 3, h: 7 },
+        { w: 2, h: 14 },
+        { w: 6, h: 6 }
+    ];
+
+    // map
+    let r = rect.map((r) => {    //r은 rect 첫번째 항목의 주소값을 참조하여 가져온 것
+        r.len = (r.w + r.h) * 2;
+        r.surface = r.w * r.h;
+        return r;
+    });
+
+    console.log(r);
+
+    /*문제 1)주급(total)계산하기*/
+
+    let salary = [
+        { name: "홍길동", time: 40, sal: 10000, total: 0 },
+        { name: "임꺽정", time: 15, sal: 20000, total: 0 },
+        { name: "장길산", time: 20, sal: 20000, total: 0 },
+        { name: "강감찬", time: 30, sal: 15000, total: 0 },
+        { name: "이순신", time: 40, sal: 30000, total: 0 }
+    ]
+
+    let s = salary.map((s) => {
+        s.total = s.time * s.sal;
+        return s;
+    }).forEach(s => {
+        console.log(`${s.name} ${s.time} ${s.sal} ${s.total}`);
+    })
+
+
+
+
+
+
+
+</script>
