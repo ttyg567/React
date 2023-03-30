@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button type="button" id="btn1" style="background-color:rgb(255, 251, 0);" onclick="changeBackground(this)"> 배경색
+    </button>
+    <button type="button" id="btn2" style="background-color:rgb(42, 173, 16);" onclick="changeBackground(this)"> 배경색
+    </button>
+    <button type="button" id="btn3" style="background-color:rgb(5, 96, 135);" onclick="changeBackground(this)"> 배경색
+    </button>
+    <button type="button" id="btn4" style="background-color:rgb(238, 19, 19);" onclick="changeBackground(this)"> 배경색
+    </button>
+    <button type="button" id="btn5" style="background-color:rgb(202, 6, 219);" onclick="changeBackground(this)"> 배경색
+    </button>
+    <button type="button" id="btn6" style="background-color:rgb(11, 184, 241);" onclick="changeBackground(this)"> 배경색
+    </button>
+</body>
+
+</html>
+<script>
+    function changeBackground(me) {
+        // event -  자바스크립트가 제공하는 내장객체, 발생한 이벤트에 대한 모든 정보를 갖고있다.
+        console.log(event.target.id);   // 실행했을 때 id값을 가져옴
+        console.log(event.target); // 이벤트 객체의 정보를 가져옴 
+        body = document.getElementsByTagName("body");
+        body[0].style.backgroundColor = me.style.backgroundColor;
+    }
+</script>
