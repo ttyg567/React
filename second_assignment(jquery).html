@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1> 성적 관리 프로그램 </h1> <br />
+    <h3> 이름, 국어, 영어, 수학 성적을 input 태그로 입력 받아, 총점과 평균을 출력(div태그 사용) </h3><br />
+    <h3> 각 값의 입력범위를 체크하고 (0~100 사이) 마지막에 총점과 평균을 출력 </h3>
+
+    이름: <input type="text" id="name"> <br />
+    국어: <input type="text" id="kor"> <br />
+    영어: <input type="text" id="eng"> <br />
+    수학: <input type="text" id="mat"> <br />
+
+    <button type="button" id="goCal"> 결과확인 </button> &nbsp; &nbsp;
+    <button type="button" id="goClear"> 새로입력 </button><br />
+
+    결과: <div id="result"></div>
+</body>
+
+<script>
+    $(document).ready(() => {
+        $("#goCal").click(() => {
+            name = $("#name").val();
+            kor = parseInt($("#kor").val());
+            if (kor < 0 || kor > 100) {
+                alert("국어 점수를 1 ~100 점 사이로 입력하세요.")
+                return;
+            }
+            eng = parseInt($("#eng").val());
+            if (eng < 0 || eng > 100) {
+                alert("영어 점수를 1 ~100 점 사이로 입력하세요.")
+                return;
+            }
+            mat = parseInt($("#mat").val());
+            if (mat < 0 || mat > 100) {
+                alert("수학 점수를 1 ~100 점 사이로 입력하세요.")
+                return;
+            }
+
+            total = kor + eng + mat;
+
+            temp = `${name}의 총점은 ${total} 이고, 평균은 ${total / 3} 입니다.`;
+
+            $("#result").html(temp);
+
+
+        })
+    })
+
+    $("#goClear").click(() => {
+        $("input").val("");
+        $("#result").html("");
+    })
+
+
+</script>
+
+</html>
