@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<body>
+    <from>
+        kor: <input type="text" name="kor" id="kor"><br/>
+        eng: <input type="text" name="eng" id="eng"><br/>
+        mat: <input type="text" name="mat" id="mat"><br/>
+        result: <input type="text" name="result" id="result"><br/>
+
+        <button type="button" id="btnAdd">성적 계산하기</button>
+
+    </from>
+    
+</body>
+</html>
+
+<script>
+    $(document).ready( ()=>{
+        $("#btnAdd").click(()=>{
+            $.ajax({
+                url:"/score/scoreadd",
+                data:{"kor":$("#kor").val(), "eng":$("#eng").val(), "mat":$("#mat").val()},
+                dataType: "json"
+            })
+            .done( (res, status, erro) => {
+                console.log(res);
+                $("#result").val(res.result);
+            })
+            .fail( (res, status, erro) => {
+                console.log(status);
+            })
+        })
+
+    })
+</script>
