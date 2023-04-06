@@ -1,4 +1,6 @@
-var express = require("express")
+let express = require('express');
+let router = express.Router();
+let commonDB = require("./commonDB");
 var app = express();
 var fs = require("fs");
 var ejs = require("ejs");
@@ -7,46 +9,28 @@ var ejs = require("ejs");
 app.set("view engine", ejs);
 app.use(express.urlencoded({ extended: false }));
 
-let boardList = [
-    { id: 1, title: "제목1", writer: "작성자1", wdate: "2023-04-04" },
-    { id: 2, title: "제목2", writer: "작성자2", wdate: "2023-04-05" },
-    { id: 3, title: "제목3", writer: "작성자3", wdate: "2023-04-06" },
-    { id: 4, title: "제목4", writer: "작성자4", wdate: "2023-04-07" },
-    { id: 5, title: "제목5", writer: "작성자5", wdate: "2023-04-08" },
-]
-
-app.use("/board/list", (request, response) => {
-    response.render("board/board_list.ejs", {
-        boardList: boardList,
-        totalcnt: 5
-    })
-})
-
-app.use("/board/view/:id", (request, response) => {
-    let id = request.params.id;
-    let item = boardList.filter(x => x.id == id);
-    response.render("board/board_view.ejs", { item: item[0] })
-})
-
-//페이지만 이동한다. board_write.ejs로 이동만 한다
-app.use("/board/write", (request, response) => {
-    response.render("board/board_write.ejs")
-})
-// 저장하기
-app.use("/board/save", (request, response) => {
-    let title = request.body.title;
-    let contents = request.body.contents;
-    let writer = request.body.writer;
-    let id = boardList.length + 1;
-    boardList.push({ id: id, title: title, contents: contents, writer: writer });
-    response.redirect("/board/list"); //강제이동
-})
-
-app.use((request, response) => {
-    response.writeHead(200, { "Content-type": "text/html" });
-    response.end("<H1>Express</H1>")
+/* GET home page. */
+router.get('/', async function(req, res, next) {
+  let sql=`
+    select id, title, writer, 
+    contents, date_format(wdate, '%Y-%m-%d') wdate
+    from tb_board
+  `;
+  
+  let results = await commonDB.mysqlRead(sql, []);
+  res.render('board/board_list', { boardList: results });
 });
 
-app.listen(4000, () => {
-    console.log("server start http://127.0.0.1:4000");
-})
+router.get('/view/:id', async function(req, res, next) {
+  
+  let id = req.params.id;
+  let sql = `select id, title, writer, 
+            contents, date_format(wdate, '%Y-%m-%d') wdate 
+            from tb_board 
+            where id=${id}`;
+  let results = await commonDB.mysqlRead(sql, []);
+
+  res.render('board/board_view.ejs', { item: results[0] });
+});
+
+module.exports = router;
