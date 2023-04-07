@@ -1,43 +1,45 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// ctrl+h 누르고 우측 상단에서 고치면 한번에 수정 가능
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+const session = require("express-session");
+const MYSQLSTORE = require("express-mysql-session")(session);
+const DBInfo = require("./routes/commonDB");  //세션이 저장될 DB 정보를 넘겨야한다
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var guestRouter = require("./routes/guestbook");  // 모듈을 메모리로 가져온다
-var ajaxRouter = require("./routes/ajaxtest"); 
-var scoreRouter = require("./routes/score");
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let boardRouter = require('./routes/board');
+let memberRouter = require('./routes/member');
 
-var app = express();
 
-// view engine setup (내부 환경변수 설정)
+let app = express();
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-// 미들웨어들 사용
+
+// 미들웨어 - 모든 웹 상의 요청이 거쳐간다
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// static - image, css, js
-// nodejs가 __(언더바 두개)로 시작하는 변수나 함수는 내장변수나 함수이다
-// __dirname : 내장변수, 현재 디렉토리 경로를 갖고 있다
-// path.join : path - 전체 디렉토리 경로에 대한 관리를 도와준다
-// join은 합친다는 의미, 
-// path.join(__dirname, 'public') -> c:/temp/public 형태로 전체 경로를 만들어준다 c:\\temp\\public
-
-console.log(__dirname);
-console.log(path.join(__dirname, 'public'));
-
 app.use(express.static(path.join(__dirname, 'public')));
+console.log(DBInfo.DBInfo)
+let sessionStore=new MYSQLSTORE(DBInfo.DBInfo);
+app.use( session({
+  key:"session_key",
+  secret:"rmsiddkanrjeuwiqorthfaesldkjfbdskjafbeskdljfbgheskjdlfbgwg32iosaikwaesk",
+  store: sessionStore,
+  resave: false,
+  saveUninitialized:false
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-// url이 /guestbook 으로 시작할 경우 guestRouter가 처리한다
-app.use('/guestbook', guestRouter);
-app.use('/ajax', ajaxRouter);
-app.use('/score', scoreRouter);
+app.use('/board', boardRouter);
+app.use('/member', memberRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,10 +58,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// npm install nodemon
-// npm install -g nodemon 둘 다 해주기
-//터미널에서 아래 화살표 눌러서 command prompt로 바꿔준다
-
-// nodemon start
-// npx nodemon start (위에꺼 안되면 이렇게 실행)
