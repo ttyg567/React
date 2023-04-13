@@ -1,30 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
-import HelloComponent from './component/HelloComponent';
-import Iftest1 from './component/Iftest1';
-import Fortest1 from './component/Fortest1';
-import Fortest2 from './component/Fortest2';
-import Hero from './component/Hero';
-import Gugudan from './component/Gugudan';
-import HeroList from './component/HeroList'
-import HeroWrite from './component/HeroWrite'
+import { Routes, Route } from 'react-router-dom';
+
+import Layout from './layout/Layout.js'   // src 폴더 부터 시작하는 경로를 적어준다
+import Home from './componenet/Home.js'
+import BoardList from './componenet/board/BoardList.js';
+import BoardWrite from './componenet/board/BoardWrite.js';
+import ScoreList from './componenet/score/ScoreList.js';
 
 function App() {
   return (
     <div className="App">
-      <h1 className='title'> 제목1 </h1>
-      {/*<HelloComponent/>*/}
-      {/*<Iftest1/>*/}
-      {/*<Fortest1/>*/}
-      {/*<Fortest2/>*/}
-      {/*<Hero/>*/}
-      {/*<Gugudan/>*/}
-      {/**/}
-      <HeroWrite/>
-      <HeroList/>
-      
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route index element={<Home/>} />
+          <Route path="/board/list" element={<BoardList/>} />
+          <Route path="/board/write" element={<BoardWrite/>} />
+          <Route path="/board/view/:id" element={<BoardWrite/>} />
+          <Route path="/score/list" element={<ScoreList/>} />
+        </Route>
+      </Routes>
+
     </div>
   );
 }
 
 export default App;
+
+// 혹시라도 폴더명이나 파일명의 대소문자가 바뀌면, 이름변경으로 하면 안되고 삭제했다가 다시 만들어야 인식한다
