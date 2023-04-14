@@ -7,6 +7,8 @@ import Home from './componenet/Home.js'
 import BoardList from './componenet/board/BoardList.js';
 import BoardWrite from './componenet/board/BoardWrite.js';
 import ScoreList from './componenet/score/ScoreList.js';
+import HeroList from './componenet/hero/HeroList.js';
+import HeroWrite from './componenet/hero/HeroWrite.js';
 
 function App() {
   return (
@@ -15,9 +17,14 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route index element={<Home/>} />
           <Route path="/board/list" element={<BoardList/>} />
+          <Route path="/board/list/:id" element={<BoardList/>} />
           <Route path="/board/write" element={<BoardWrite/>} />
           <Route path="/board/view/:id" element={<BoardWrite/>} />
           <Route path="/score/list" element={<ScoreList/>} />
+
+          <Route path="/hero/list" element={<HeroList/>} />
+          <Route path="/hero/write" element={<HeroWrite/>} />
+          <Route path="/hero/view/:id" element={<HeroWrite/>} />
         </Route>
       </Routes>
 
